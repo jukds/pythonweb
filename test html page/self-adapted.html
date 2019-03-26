@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Document</title>
+    <link rel="stylesheet" href="../css/font-awesome-4.7.0/css/font-awesome.min.css">
+    <style>
+        * {
+            padding: 0;
+            margin: 0;
+            font-family: "montserrat", sans-serif;
+            box-sizing: border-box;
+        }
+
+        .services-section {
+            background: #444;
+            padding: 60px 0;
+        }
+
+        .inner-width {
+            width: 100%;
+            max-width: 1200px;
+            margin: auto;
+            padding: 0 20px;
+            overflow: hidden;
+        }
+
+        .section-title {
+            text-align: center;
+            color: #ddd;
+            text-transform: uppercase;
+            font-size: 30px;
+        }
+
+        .border {
+            width: 160px;
+            height: 2px;
+            background:#82ccdd;
+            margin:40px auto;
+        }
+        .services-container{
+            display: flex;
+            flex-wrap:wrap;
+            justify-content: center;
+        }
+        .service-box{
+            max-width:33.33%;
+            padding:10px;
+            text-align:center;
+            color:#ddd;
+            
+        }
+        .service-icon{
+            display: inline-block;
+            width:70px;
+            height: 70px;
+            border:3px solid #82ccdd;
+            color:#82ccdd;
+            transform:rotate(45deg);
+            margin-bottom:30px;
+            margin-top:16px;
+            cursor:pointer;
+        }
+        .service-icon i{
+            line-height:70px;
+            transform:rotate(-45deg);
+            font-size:26px;
+        }
+        .service-icon:hover{
+            background:#82ccdd;
+            color:#ddd;
+            transition: 0.4s;
+        }
+        .service-title{
+            font-size:18px;
+            text-transform: uppercase;
+            margin-bottom:10px;
+        }
+        .service-desc{
+            font-size:14px;
+        }
+        @media screen and (max-width:960px){
+            .service-box{
+                max-width: 45%;
+            }
+        }
+        @media screen and (max-width:768px){
+            .service-box{
+                max-width: 50%;
+            }
+        }
+        @media screen and (max-width:480px){
+            .service-box{
+                max-width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div class="services-section">
+        <div class="inner-width">
+            <h1 class="section-title">our services</h1>
+            <div class="border"></div>
+            <div class="services-container">
+                <div class="service-box">
+                    <div class="service-icon">
+                        <i class="fa fa-paint-brush"></i>
+                    </div>
+                    <div class="service-title">web designs</div>
+                    <div class="service-desc">
+                        desc1;there is a descrittion of this title,i did not record it but this can also work!
+                    </div>
+                </div>
+                <div class="service-box">
+                    <div class="service-icon">
+                        <i class="fa fa-code"></i>
+                    </div>
+                    <div class="service-title">web development</div>
+                    <div class="service-desc">
+                        desc2;there is a descrittion of this title,i did not record it but this can also work!
+                     
+                    </div>
+                </div>
+                <div class="service-box">
+                    <div class="service-icon">
+                        <i class="fa fa-tags"></i>
+                    </div>
+                    <div class="service-title">responseive designs</div>
+                    <div class="service-desc">
+                        desc3;there is a descrittion of this title,i did not record it but this can also work!
+                    </div>
+                </div>
+                <div class="service-box">
+                    <div class="service-icon">
+                        <i class="fa fa-object-ungroup"></i>
+                    </div>
+                    <div class="service-title">edit sections</div>
+                    <div class="service-desc">
+                        desc4;there is a descrittion of this title,i did not record it but this can also work!
+
+                    </div>
+                </div>
+                <div class="service-box">
+                    <div class="service-icon">
+                        <i class="fa fa-database"></i>
+                    </div>
+                    <div class="service-title">databases</div>
+                    <div class="service-desc">
+                        desc5;there is a descrittion of this title,i did not record it but this can also work!
+                    </div>
+                </div>
+                <div class="service-box">
+                    <div class="service-icon">
+                        <i class="fa fa-android"></i>
+                    </div>
+                    <div class="service-title">android</div>
+                    <div class="service-desc">
+                        desc6;there is a descrittion of this title,i did not record it but this can also work!
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>
