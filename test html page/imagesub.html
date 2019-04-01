@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <link rel="stylesheet" href="../css/font-awesome-4.7.0/css/font-awesome.min.css">
+    <title>Document</title>
+    <style>
+        *{
+            margin:0;
+            padding:0;
+        }
+    .container{
+        position: absolute;
+        display: flex;
+        justify-content: center;
+        align-items:flex-end;
+        width:240px;
+        height: 390px;
+        top:50%;
+        left:50%;
+        background: #000;
+        transform: translate(-50%,-50%);
+        overflow: hidden;
+    }
+    .container img{
+        width:100%;
+    }
+    .icons{
+        position: absolute;
+        right:10px;
+        bottom: 40px;
+    }
+    .container:hover .icon{
+        transform: translateY(20px);
+    }
+    .icon{
+        text-decoration: none;
+        color:#fff;
+        font-size:22px;
+        margin:0 10px;
+        /* transition:0.4s; */
+        transform: translateY(80px);
+    }
+    .icon:nth-child(1){
+       transition: transform 0.4s 0.05s,color 0.4s;
+    }
+    .icon:nth-child(2){
+       transition: transform 0.4s 0.1s,color 0.4s;
+    }
+    .icon:nth-child(3){
+       transition: transform 0.4s 0.15s,color 0.4s;
+    }
+    .icon:hover{
+        color:#3498db;
+    }
+    .container::before{
+        content:"";
+        position:absolute;
+        left:0;
+        bottom:0;
+        background:rgba(255,255,255,0.7);
+        width:100%;
+        height: 0px;
+        clip-path: polygon(0 100%,100% 0,100% 100%);
+        transition: 0.5s;
+    }
+    .container:hover::before{
+        height:100px;
+    }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <img src="../image/test.jpeg" alt="">
+        <div class="icons">
+            <a href="" class="icon fa fa-heart"></a>
+            <a href="" class="icon fa fa-comment"></a>
+            <a href="" class="icon fa fa-share"></a>
+        </div>
+    </div>
+</body>
+</html>
