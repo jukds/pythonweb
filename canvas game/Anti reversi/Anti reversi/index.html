@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>黑白翻转棋</title>
+    <link rel="stylesheet" href="css/reversi.css">
+</head>
+<body>
+    <div id='title'>
+        <p id='title1'>黑<span>白</span>棋</p>
+        <p id='title2'>双人对战游戏</p>
+    </div>
+    <canvas id='canvas' width='500' height="500"></canvas>
+    <div id='gamerecord'>
+        <img src="image/blackpieces.png" alt="">
+        <span id='blackcount'>:0</span><br/>
+        <img src="image/whitepieces.png" alt="">
+        <span id='whitecount'>:0</span><br/>
+        
+        <div id='start'>开始游戏</div>
+        <div id='btn'>悔棋一步</div>
+        <p>执棋者 : <span id='player'>黑子先行</span></p>
+        <p >回合数：<span id='round'>尚未开始</span></p>
+        <p id='victory'></p>
+        
+    </div>
+    <script src='js/method.js'></script>
+</body>
+</html>

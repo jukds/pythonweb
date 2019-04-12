@@ -1,0 +1,349 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+	<meta charset="UTF-8">
+	<meta name="viewport" content="width=device-width, initial-scale=1.0">
+	<meta http-equiv="X-UA-Compatible" content="ie=edge">
+	<title>Document</title>
+	<style>
+		* {
+			padding: 0;
+			margin: 0;
+		}
+
+		#can {
+			margin-left: 200px;
+			width: 600px;
+
+			display: inline-block;
+		}
+
+		#message {
+			width: 300px;
+			display: inline-block;
+			margin-left: 80px;
+		}
+	</style>
+</head>
+
+<body>
+	<div id="can">
+		<canvas id="mycanvas"></canvas>
+	</div>
+	<div id="message">
+		<h4>欢迎来玩生命游戏！</h4>
+		<p>每个格子的生命变化都由周围8个格子来决定。</p>
+		<p>所有的格子遵从以下四个原则：</p>
+		<ol>
+			<li>如果一个生命周围的生命少于两个，这个生命死亡；</li>
+			<li>如果一个生命周围的生命多于三个，这个生命死亡；</li>
+			<li>如果一个死格子生命周围有三个生命，这个格子出现生命；</li>
+			<li>如果一个生命周围有两个或者三个生命，生命保持原样。</li>
+		</ol>
+		<p>我们给你提供了一些参考：</p>
+		<input type="button" id="fly" value="&nbsp&nbsp滑翔机&nbsp&nbsp"><span>:一个鬼畜的五格生命体</span><br>
+		<input type="button" id="boat" value="光速飞船"><span>:生命游戏里最快的运动速度</span><br />
+		<input type="button" id="gun" value="滑翔机枪"><span>:了不起的繁殖结构</span><br />
+		<input type="button" id="shaking" value="&nbsp&nbsp振动子&nbsp&nbsp"><span>神奇的规律</span><br>
+		<input type="button" id="clear" value="清除画布"><br>
+		<p>在左边的画布上绘制你的初始图形开始尝试吧。</p>
+		<p><span id="point">当前鼠标位置</span><br /><span id="information">尚未开始</span></p>
+		<label>回合次数</label><input type="text" name="" id="round" value="1000"><br>
+		<input type="button" id="start" value="开始游戏">
+		<input type="button" id="stop" value="结束游戏">
+	</div>
+
+	<script>
+		var c = document.getElementById('mycanvas');
+		var ctx = c.getContext('2d');
+		c.width = 600;
+		c.height = 600;
+		ctx.fillStyle = '#ccc';
+		ctx.fillRect(0, 0, 600, 600)
+		function background() {
+			for (var i = 0; i < c.width; i = i + 10) {
+				for (var j = 0; j < c.height; j = j + 10) {
+					ctx.fillStyle = '#fff';
+					ctx.fillRect(i + 1, j + 1, 8, 8)
+				}
+			}
+		}
+		function make2Darray(x, y) {
+			var result = new Array(y);
+			for (var i = 0; i < y; i++) {
+				result[i] = new Array(x);
+				result[i].fill(0);
+			}
+			return result;
+		}
+		document.onmousemove = function (e) {
+			var loc = "当前鼠标位置 x:" + e.pageX + ",y:" + e.pageY;
+			document.getElementById("point").innerHTML = loc;
+		}
+		background();
+		var matrix = make2Darray(60, 60);
+		console.log(matrix);
+		console.log(c.width);
+
+		//生成初始图形和数组；
+		document.onclick = function (e) {
+			if (e.pageX < 800 && e.pageY < 800) {
+				x = Math.floor((e.pageX - 200) / 10);
+				y = Math.floor(e.pageY / 10);
+				if (matrix[y][x] == 0) {
+					matrix[y][x] = 1;
+					ctx.fillStyle = "#000";
+					ctx.fillRect(x * 10 + 1, y * 10 + 1, 8, 8);
+				} else {
+					matrix[y][x] = 0;
+					ctx.fillStyle = "#fff";
+					ctx.fillRect(x * 10 + 1, y * 10 + 1, 8, 8);
+				}
+			}
+
+
+		}
+		//数组变化；
+		function changeMatrix(matrix) {
+			var rows = matrix.length;
+			var cols = matrix[0].length;
+			var result = make2Darray(cols, rows);
+			function change(i, j) {//
+				var sum = 0;
+				var left = new Array();
+				var right = new Array();
+				//统计格子周围八个格子中生命的个数；
+				//这里用了数次判断来使它变成无限个矩阵平铺:相当于消除了边界；
+				if (i == 0) {
+					var left = matrix[rows - 1];
+				} else {
+					var left = matrix[i - 1];
+				}
+				if (i == rows - 1) {
+					var right = matrix[0];
+				} else {
+					var right = matrix[i + 1];
+				}
+				//下面的是加左上角的；
+				if (j == 0) {
+					sum += left[cols - 1];
+				} else {
+					sum += left[j - 1];
+				}
+				//下面的是加左边的；
+				sum += left[j];
+				//下面的是加左下角的；
+				if (j == cols - 1) {
+					sum += left[0];
+				} else {
+					sum += left[j + 1];
+				}
+				//下面的是加上方的；
+				if (j == 0) {
+					sum += matrix[i][cols - 1];
+				} else {
+					sum += matrix[i][j - 1];
+				}
+				//下面的是加下方的；
+				if (j == cols - 1) {
+					sum += matrix[i][0];
+				} else {
+					sum += matrix[i][j + 1];
+				}
+				//下面是加右上方的；
+				if (j == 0) {
+					sum += right[cols - 1];
+				} else {
+					sum += right[j - 1];
+				}
+				//下面是加右边的；
+				sum += right[j];
+				//下面是加右下方的；
+				if (j == cols - 1) {
+					sum += right[0];
+				} else {
+					sum += right[j + 1];
+				}
+				//生死交替；
+				//规定生命游戏的规则；
+				if (matrix[i][j] == 1) {
+					if (sum == 2 || sum == 3) {
+						result[i][j] = 1;
+					} else {
+						result[i][j] = 0;
+					}
+				} else {
+					if (sum == 3) {
+						result[i][j] = 1;
+					}
+				}
+			};
+
+			for (var i = 1; i < rows; i++) {
+				for (var j = 1; j < cols; j++) {
+					change(i, j);
+				}
+			}
+			return result;
+		}
+
+		//画出数组；
+
+		function drawMatrix(matrix) {
+			var rows = matrix.length;
+			var cols = matrix[0].length;
+			for (var i = 0; i < rows; i = i + 1) {
+				for (var j = 0; j < cols; j = j + 1) {
+					if (matrix[i][j] == 0) {
+						ctx.fillStyle = "#fff";
+						ctx.fillRect(j * 10 + 1, i * 10 + 1, 8, 8);
+					} else {
+						ctx.fillStyle = "#000";
+						ctx.fillRect(j * 10 + 1, i * 10 + 1, 8, 8);
+					}
+				}
+			}
+		}
+
+		function clearmatrix() {
+			for (var i = 0; i < 60; i++) {
+				for (var j = 0; j < 60; j++) {
+					matrix[i][j] = 0;
+				}
+			}
+		}
+
+		function fly() {
+			clearmatrix();
+			matrix[1][2] = 1;
+			matrix[2][3] = 1;
+			matrix[3][1] = 1;
+			matrix[3][2] = 1;
+			matrix[3][3] = 1;
+			drawMatrix(matrix);
+		}
+		function boat() {
+			clearmatrix();
+			matrix[10][1] = 1;
+			matrix[10][4] = 1;
+			matrix[11][5] = 1;
+			matrix[12][1] = 1;
+			matrix[12][5] = 1;
+			matrix[13][2] = 1;
+			matrix[13][3] = 1;
+			matrix[13][4] = 1;
+			matrix[13][5] = 1;
+			drawMatrix(matrix);
+		}
+
+		function gun() {
+			clearmatrix();
+			matrix[58][15] = 1;
+			matrix[58][16] = 1;
+			matrix[57][15] = 1;
+			matrix[57][16] = 1;
+			matrix[53][15] = 1;
+			matrix[52][14] = 1;
+			matrix[52][15] = 1;
+			matrix[52][16] = 1;
+			matrix[51][13] = 1;
+			matrix[51][17] = 1;
+			matrix[50][12] = 1;
+			matrix[50][14] = 1;
+			matrix[50][15] = 1;
+			matrix[50][16] = 1;
+			matrix[50][18] = 1;
+			matrix[49][13] = 1;
+			matrix[49][14] = 1;
+			matrix[49][15] = 1;
+			matrix[49][16] = 1;
+			matrix[49][17] = 1;
+
+			matrix[43][12] = 1;
+			matrix[43][13] = 1;
+			matrix[43][16] = 1;
+			matrix[42][14] = 1;
+			matrix[42][16] = 1;
+			matrix[41][16] = 1;
+			matrix[41][17] = 1;
+			matrix[40][17] = 1;
+			matrix[40][18] = 1;
+			matrix[39][15] = 1;
+			matrix[39][17] = 1;
+			matrix[39][18] = 1;
+			matrix[38][15] = 1;
+			matrix[38][16] = 1;
+			matrix[38][17] = 1;
+			matrix[35][10] = 1;
+			matrix[35][11] = 1;
+			matrix[35][15] = 1;
+			matrix[35][16] = 1;
+			matrix[34][13] = 1;
+			matrix[33][10] = 1;
+			matrix[33][16] = 1;
+			matrix[32][11] = 1;
+			matrix[32][12] = 1;
+			matrix[32][14] = 1;
+			matrix[32][15] = 1;
+
+			matrix[31][12] = 1;
+			matrix[31][14] = 1;
+			matrix[30][13] = 1;
+			matrix[29][13] = 1;
+			matrix[24][13] = 1;
+			matrix[24][14] = 1;
+			matrix[23][13] = 1;
+			matrix[23][14] = 1;
+			drawMatrix(matrix);
+
+		}
+
+		function shaking() {
+			clearmatrix();
+			for (var i = 4; i < 7; i++) {
+				matrix[5][i] = 1;
+			}
+			for (var i = 20; i < 30; i++) {
+				matrix[5][i] = 1;
+			}
+			drawMatrix(matrix);
+
+		}
+		//循环执行；
+		var timer;
+		function count(count) {
+			var times = count;
+			timer = setInterval(function () {
+				matrix = changeMatrix(matrix);
+				drawMatrix(matrix);
+				times--;
+				document.getElementById('information').innerHTML = "第" + (count - times) + "个回合"
+				if (times < 0) {
+					clearInterval(timer);
+				}
+			}, 50);
+		}
+
+		function start() {
+			var round = document.getElementById("round").value;
+
+			count(round);
+		}
+		document.getElementById('start').onclick = function () {
+			clearInterval(timer);
+			start();
+		};
+		document.getElementById('stop').onclick = function () { clearInterval(timer) };
+		document.getElementById('fly').onclick = function () { fly() };
+		document.getElementById('boat').onclick = function () { boat() };
+		document.getElementById('gun').onclick = function () { gun() };
+		document.getElementById('shaking').onclick = function () { shaking() };
+		document.getElementById('clear').onclick = function () {
+			clearmatrix();
+			drawMatrix(matrix);
+		};
+	</script>
+</body>
+
+</html>

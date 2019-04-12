@@ -1,0 +1,64 @@
+*{
+    margin:0;
+    padding:0;
+}
+body{
+    background-color: #EECFA1;
+}
+#title{
+    position: absolute;
+    left:100px;
+    top:50px;
+    width:200px;
+    height: 500px;
+    writing-mode :tb-rl;
+}
+#title1{
+    font-size:100px;
+    text-shadow:#000 0px 10px 20px;
+}
+#title1 span{
+    color: #fff;
+}
+#title2{
+    margin-top:10px;
+    font-size: 20px;
+    color:#cc3300;
+    text-shadow:#444 0px 2px 5px;
+}
+#canvas{
+    position: absolute;
+    left:400px;
+    top:50px;
+    width:500px;
+    height: 500px;
+    box-shadow:0px 0px 30px;
+}
+#gamerecord{
+    position: absolute;
+    left:1000px;
+    top:50px;
+    width:300px;
+    height: 500px;
+}
+#start,#btn{
+    width:200px;
+    height: 50px;
+    background-color: #cc6633;
+    margin-top:20px;
+    text-align: center;
+    font-size: 30px;
+    border-radius: 25px;
+    border:2px solid #993300;
+    box-shadow: 0px 0px 10px;
+}
+#blackcount,#whitecount{
+    font-size:75px;
+}
+#gamerecord p{
+    margin-top:20px;
+    font-size:25px;
+}
+#victory{
+    font-weight: 700;
+}
